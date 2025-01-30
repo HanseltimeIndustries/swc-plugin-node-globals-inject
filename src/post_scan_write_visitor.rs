@@ -1,6 +1,6 @@
 use swc_core::{
     atoms::Atom,
-    common::{SyntaxContext, DUMMY_SP},
+    common::{Mark, SyntaxContext, DUMMY_SP},
     ecma::{
         ast::{
             BindingIdent, CallExpr, Callee, Decl, Expr, ExprOrSpread, Ident, IdentName, MemberExpr,
@@ -20,6 +20,7 @@ use crate::{
 pub struct PostScanWriteVisitor<'a> {
     pub scan_results: ScanResults<'a>,
     pub specifier_factory: SpecifierFactory,
+    pub unresolved_mark: Mark,
 }
 
 impl PostScanWriteVisitor<'_> {
@@ -66,8 +67,7 @@ impl PostScanWriteVisitor<'_> {
             name: Pat::Ident(BindingIdent {
                 id: Ident {
                     span: DUMMY_SP,
-                    // TODO: fix this not sure what the context is at this point - it was 2 when reviewing
-                    ctxt: SyntaxContext::default(),
+                    ctxt: SyntaxContext::empty().apply_mark(self.unresolved_mark),
                     sym: Atom::new("__filename"),
                     optional: false,
                 },
@@ -115,8 +115,7 @@ impl PostScanWriteVisitor<'_> {
             name: Pat::Ident(BindingIdent {
                 id: Ident {
                     span: DUMMY_SP,
-                    // TODO: fix this not sure what the context is at this point - it was 2 when reviewing
-                    ctxt: SyntaxContext::default(),
+                    ctxt: SyntaxContext::empty().apply_mark(self.unresolved_mark),
                     sym: Atom::new("__dirname"),
                     optional: false,
                 },

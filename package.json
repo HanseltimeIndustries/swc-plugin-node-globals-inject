@@ -1,14 +1,24 @@
 {
     "name": "@hanseltime/swc-plugin-node-globals-inject",
     "version": "0.1.0",
-    "description": "",
-    "author": "",
+    "description": "Transform plugin for js/ts projects that use node globals like __dirname and __filename and want to compile to esm",
+    "author": {
+        "name": "hanseltime",
+        "url": "https://github.com/hanseltime"
+    },
+    "repository": {
+        "url": "https://github.com/HanseltimeIndustries/swc-plugin-node-globals-inject"
+    },
     "license": "ISC",
-    "keywords": ["swc-plugin"],
+    "keywords": [
+        "swc-plugin"
+    ],
     "main": "target/wasm32-wasi/release/node_globals_inject.wasm",
     "scripts": {
         "prepublishOnly": "cargo build-wasi --release"
     },
-    "files": [],
+    "files": [
+        "target/wasm32-wasi/release/node_globals_inject.wasm"
+    ],
     "preferUnplugged": true
 }
