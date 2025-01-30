@@ -14,6 +14,7 @@ env:
   RUST_LOG: "off"
   # This ensures make commands don't do fixes
   NO_FIX: "true"
+  TARGET_FILE: target/wasm32-wasip1/release/node_globals_inject.wasm
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -116,16 +117,11 @@ jobs:
         run: |
           make test
 
-  node-int-test:
-    name: Node Integration Test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
+  cargo-build:
+    name: Cargo Build
+    runs-on: ubuntu-latest
+    outputs:
+      target-cache-key: ${{ steps.cache-target.outputs.cacheKey }}
     steps:
       - uses: actions/checkout@v4
 
@@ -136,8 +132,67 @@ jobs:
         with:
           target: wasm32-wasip1
 
-      - name: Run node-int-test
+      - name: Run cargo test
         run: |
+          make build
+
+      - name: Cache Build Output
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.TARGET_FILE }}
+          key: target-build-${{ hashFiles( env.TARGET_FILE ) }}
+          enableCrossOsArchive: true
+      
+      - name: Output Key
+        id: cache-target
+        run: |
+          echo "cacheKey=target-build-${{ hashFiles( env.TARGET_FILE ) }}" >> "$GITHUB_OUTPUT"
+
+  node-int-test:
+    name: Node Integration Test
+    needs:
+      - cargo-build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        node:
+          - '18.x'
+          - '20.x'
+          - '22.x'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: yarn
+    
+      - run: corepack enable
+
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: wasm32-wasip1
+
+      - name: Restore Target Build
+        id: target-build-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.TARGET_FILE }}
+          key: ${{ needs.cargo-build.outputs.target-cache-key }}
+          enableCrossOsArchive: true
+
+      - name: Run node-int-test
+        env:
+          NO_BUILD: ${{ (steps.target-build-restore.outputs.cache-hit && 'true') || '' }}
+        shell: bash
+        run: |
+          corepack enable
           make node-int-test
 
   done:
@@ -147,6 +202,7 @@ jobs:
       - cargo-deny
       - cargo-check
       - cargo-test
+      - node-int-test
     runs-on: ubuntu-latest
     name: Done
     steps:
