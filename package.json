@@ -1,6 +1,6 @@
 {
     "name": "@hanseltime/swc-plugin-node-globals-inject",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "Transform plugin for js/ts projects that use node globals like __dirname and __filename and want to compile to esm",
     "author": {
         "name": "hanseltime",
