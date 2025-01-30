@@ -20,5 +20,9 @@
     "files": [
         "target/wasm32-wasip1/release/node_globals_inject.wasm"
     ],
-    "preferUnplugged": true
+    "preferUnplugged": true,
+    "packageManager": "yarn@4.6.0",
+    "devDependencies": {
+        "@changesets/cli": "^2.27.12"
+    }
 }
