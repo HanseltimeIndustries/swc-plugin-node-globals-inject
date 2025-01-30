@@ -9,14 +9,13 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "tswc -- index.ts -d dist"
+        "build": "swc index.ts -d dist"
     },
     "devDependencies": {
         "@hanseltime/swc-plugin-node-globals-inject": "portal:../",
         "@swc/cli": "^0.6.0",
         "@swc/core": "^1.10.11",
         "@types/node": "^22.12.0",
-        "tswc": "^1.4.0",
         "tsx": "^4.19.2",
         "typescript": "^5.7.3"
     },

@@ -10,3 +10,9 @@ corepack enable
 yarn install
 yarn build
 ```
+
+# TODO: tswc
+
+I personnally like tswc since it allows for closer integration of typescript which IDES support and swc.  However,
+the windows runners seem to have a bug with them.  In the future, it might be worth debugging and contributing back a fix
+to the tswc repo.  Once that works, we can run a tswc build test as well.

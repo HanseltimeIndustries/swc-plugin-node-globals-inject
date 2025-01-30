@@ -173,13 +173,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/deepmerge@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@fastify/deepmerge@npm:1.3.0"
-  checksum: 10/6ddfc230ed46bfb158dbf83c2cc7f6119c9c1afb96d885cf5d95ac17b56126d04eef83ddb1ee7a1b044e65a128c76ebf8b391a26490b19f5812fa0d2d2a3a675
-  languageName: node
-  linkType: hard
-
 "@hanseltime/swc-plugin-node-globals-inject@portal:../::locator=test-package%40workspace%3A.":
   version: 0.0.0-use.local
   resolution: "@hanseltime/swc-plugin-node-globals-inject@portal:../::locator=test-package%40workspace%3A."
@@ -892,13 +885,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cac@npm:^6.7.14":
-  version: 6.7.14
-  resolution: "cac@npm:6.7.14"
-  checksum: 10/002769a0fbfc51c062acd2a59df465a2a947916b02ac50b56c69ec6c018ee99ac3e7f4dd7366334ea847f1ecacf4defaa61bcd2ac283db50156ce1f1d8c8ad42
-  languageName: node
-  linkType: hard
-
 "cacache@npm:^19.0.1":
   version: 19.0.1
   resolution: "cacache@npm:19.0.1"
@@ -1340,7 +1326,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-tsconfig@npm:^4.7.2, get-tsconfig@npm:^4.7.5":
+"get-tsconfig@npm:^4.7.5":
   version: 4.10.0
   resolution: "get-tsconfig@npm:4.10.0"
   dependencies:
@@ -1575,13 +1561,6 @@ __metadata:
   version: 3.0.1
   resolution: "json-buffer@npm:3.0.1"
   checksum: 10/82876154521b7b68ba71c4f969b91572d1beabadd87bd3a6b236f85fbc7dc4695089191ed60bb59f9340993c51b33d479f45b6ba9f3548beb519705281c32c3c
-  languageName: node
-  linkType: hard
-
-"jsonc-parser@npm:^3.3.1":
-  version: 3.3.1
-  resolution: "jsonc-parser@npm:3.3.1"
-  checksum: 10/9b0dc391f20b47378f843ef1e877e73ec652a5bdc3c5fa1f36af0f119a55091d147a86c1ee86a232296f55c929bba174538c2bf0312610e0817a22de131cc3f4
   languageName: node
   linkType: hard
 
@@ -2290,7 +2269,6 @@ __metadata:
     "@swc/cli": "npm:^0.6.0"
     "@swc/core": "npm:^1.10.11"
     "@types/node": "npm:^22.12.0"
-    tswc: "npm:^1.4.0"
     tsx: "npm:^4.19.2"
     typescript: "npm:^5.7.3"
   languageName: unknown
@@ -2328,35 +2306,6 @@ __metadata:
     "@tokenizer/token": "npm:^0.3.0"
     ieee754: "npm:^1.2.1"
   checksum: 10/b541b605d602e8e6495745badb35f90ee8f997e43dc29bc51aee7e9a0bc3c6bc7372a305bd45f3e80d75223c2b6a5c7e65cb5159d8c4e49fa25cdbaae531fad4
-  languageName: node
-  linkType: hard
-
-"tsconfig-to-swcconfig@npm:^2.8.1":
-  version: 2.8.1
-  resolution: "tsconfig-to-swcconfig@npm:2.8.1"
-  dependencies:
-    "@fastify/deepmerge": "npm:^1.3.0"
-    get-tsconfig: "npm:^4.7.2"
-  bin:
-    t2s: dist/cli.js
-    tsconfig-to-swcconfig: dist/cli.js
-  checksum: 10/63404ed3e28de9bb4b977334135ff68220494e9a190b4584313efdd7b52152eb5ff55e21113a778590cf52b19815af70e0ef79693f5f669287444690f5d0473a
-  languageName: node
-  linkType: hard
-
-"tswc@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "tswc@npm:1.4.0"
-  dependencies:
-    cac: "npm:^6.7.14"
-    jsonc-parser: "npm:^3.3.1"
-    tsconfig-to-swcconfig: "npm:^2.8.1"
-  peerDependencies:
-    "@swc/cli": ^0.5.2
-    "@swc/core": ">= 1.3.38"
-  bin:
-    tswc: dist/cli.js
-  checksum: 10/a1c69a58f46896671897dbbf8ffea886045ad9c9ea2bf4c6258c967c9af00e58f721bf7da795830d3011a90ba667c3d42f5088406a23837f84cb38ef004db3d0
   languageName: node
   linkType: hard
 
