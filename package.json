@@ -15,7 +15,7 @@
     ],
     "main": "target/wasm32-wasi/release/node_globals_inject.wasm",
     "scripts": {
-        "prepublishOnly": "cargo build-wasi --release"
+        "prepublishOnly": "make build"
     },
     "files": [
         "target/wasm32-wasi/release/node_globals_inject.wasm"

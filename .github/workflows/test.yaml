@@ -12,6 +12,8 @@ env:
   CARGO_TERM_COLOR: "always"
   # For faster CI
   RUST_LOG: "off"
+  # This ensures make commands don't do fixes
+  NO_FIX: "true"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -31,7 +33,7 @@ jobs:
           components: rustfmt
 
       - name: "Cargo Fmt"
-        run: cargo fmt --all -- --check
+        run: make fmt
 
   cargo-clippy:
     name: Cargo clippy
@@ -44,7 +46,7 @@ jobs:
           components: clippy
 
       - name: "Cargo Clippy"
-        run: cargo clippy --all --all-targets -- -D warnings
+        run: make clippy
 
   cargo-deny:
     name: Check license of dependencies
@@ -62,11 +64,11 @@ jobs:
 
       - name: Check licenses
         run: |
-          cargo deny check licenses
+          make licenses-check
 
       - name: Check Bans
         run: |
-          cargo deny check bans
+          make bans-check
 
   cargo-check:
     name: Check
@@ -83,7 +85,6 @@ jobs:
         with:
           submodules: true
 
-      # We explicitly do this to cache properly.
       - name: Install Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
@@ -106,22 +107,38 @@ jobs:
 
       - run: corepack enable
 
-      # Source map format
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "18"
-          cache: "yarn"
-
-      # We explicitly do this to cache properly.
       - name: Install Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          target: wasm32-wasi
+          target: wasm32-wasip1
 
       - name: Run cargo test
-        if: matrix.settings.crate != 'swc_plugin_runner' && matrix.settings.crate != 'swc_ecma_parser' && matrix.settings.crate != 'swc_ecma_minifier' && matrix.settings.crate != 'swc_core' && matrix.settings.crate != 'swc_ecma_quote' && matrix.settings.crate != 'swc_cli' && matrix.settings.crate != 'binding_core_wasm'
         run: |
-          cargo test
+          make test
+
+  node-int-test:
+    name: Node Integration Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: corepack enable
+
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: wasm32-wasip1
+
+      - name: Run node-int-test
+        run: |
+          make node-int-test
 
   done:
     needs:
