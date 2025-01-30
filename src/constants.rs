@@ -4,7 +4,7 @@ pub const NODE_PATH_PKG: &str = "node:path";
 pub const URL_PKG: &str = "url";
 pub const NODE_URL_PKG: &str = "node:url";
 pub const DIRNAME_FUNC: &str = "dirname";
-pub const URL_TO_FILE_PATH_FUNC: &str = "urlToFilePath";
+pub const URL_TO_FILE_PATH_FUNC: &str = "fileURLToPath";
 
 // Comonjs Globals that we want to shim forward
 pub const DIRNAME_TOKEN: &str = "__dirname";

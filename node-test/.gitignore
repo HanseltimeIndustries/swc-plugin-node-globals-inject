@@ -1,0 +1,10 @@
+# Yarn Plug'n'play is brutal when it goes wrong, don't let it get committed
+.yarn/
+.pnp.cjs
+
+# Node modules
+node_modules
+dist
+
+# swc
+.swc/

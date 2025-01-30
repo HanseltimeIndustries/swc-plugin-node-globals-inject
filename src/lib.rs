@@ -11,14 +11,18 @@ use post_scan_write_visitor::PostScanWriteVisitor;
 use scan_visitor::{ScanResults, ScanVisitor};
 use specifier_factory::SpecifierFactory;
 
-use swc_core::ecma::{
-    ast::{Pass, Program},
-    visit::{visit_mut_pass, VisitMutWith},
-};
 use swc_core::plugin::{plugin_transform, proxies::TransformPluginProgramMetadata};
+use swc_core::{
+    common::Mark,
+    ecma::{
+        ast::{Pass, Program},
+        visit::{visit_mut_pass, VisitMutWith},
+    },
+};
 
 pub struct NodeGlobalsInjector {
     pub config: Config,
+    pub unresolved_mark: Mark,
 }
 
 /// Compound Pass object that can call the first scan plugin and then the second injection plugin
@@ -32,6 +36,7 @@ impl Pass for NodeGlobalsInjector {
         program.visit_mut_with(&mut visit_mut_pass(scan_visitor));
         program.visit_mut_with(&mut visit_mut_pass(PostScanWriteVisitor {
             scan_results,
+            unresolved_mark: self.unresolved_mark,
             specifier_factory: SpecifierFactory {
                 insert_alias_prefix: self.config.func_alias_prefix.clone(),
             },
@@ -48,5 +53,8 @@ pub fn process_transform(program: Program, metadata: TransformPluginProgramMetad
     )
     .expect(&format!("invalid {PLUGIN_NAME} configuration")[..]);
 
-    program.apply(NodeGlobalsInjector { config })
+    program.apply(NodeGlobalsInjector {
+        config,
+        unresolved_mark: metadata.unresolved_mark,
+    })
 }
