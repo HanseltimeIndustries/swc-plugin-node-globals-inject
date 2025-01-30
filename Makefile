@@ -1,5 +1,5 @@
 build:
-	cargo build-wasi --release
+	cargo build --target wasm32-wasip1 --release
 
 fmt:
 	cargo fmt --all $(if $(NO_FIX),-- --check,)

@@ -13,12 +13,12 @@
     "keywords": [
         "swc-plugin"
     ],
-    "main": "target/wasm32-wasi/release/node_globals_inject.wasm",
+    "main": "target/wasm32-wasip1/release/node_globals_inject.wasm",
     "scripts": {
         "prepublishOnly": "make build"
     },
     "files": [
-        "target/wasm32-wasi/release/node_globals_inject.wasm"
+        "target/wasm32-wasip1/release/node_globals_inject.wasm"
     ],
     "preferUnplugged": true
 }
