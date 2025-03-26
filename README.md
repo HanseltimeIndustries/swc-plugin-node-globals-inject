@@ -14,12 +14,23 @@ const __filename = fileURLToPath(import.meta.url)
 
 ## Usage
 
+### Installation
+
+```shell
+# yarn
+yarn add --dev @hanseltime/swc-plugin-node-globals-inject
+# npm
+npm install --save-dev @hanseltime/swc-plugin-node-globals-inject
+# pnpm
+pnpm install --dev @hanseltime/swc-plugin-node-globals-inject
+```
+
 ### Configuration
 
 ```json
 plugins: [
     [
-        "@swc/plugin-relay",
+        "@hanseltime/swc-plugin-node-globals-inject",
         {
             // Optional - This will change how we do function imports (only change this is you need to avoid name collisions from the default - see below)
             "funcAliasPrefix": "__from_plugin_",
